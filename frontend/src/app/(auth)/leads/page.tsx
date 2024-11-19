@@ -7,6 +7,8 @@ import { LeadFilters } from '@/components/leads/lead-filters'
 import { LeadTable } from '@/components/leads/lead-table'
 import { LeadDetailsPanel } from '@/components/leads/lead-details-panel'
 import { Lead } from '@/types'
+import { CSVUpload } from '@/components/leads/csv-upload'
+import { toast } from 'sonner'
 
 // Sample data
 const sampleLeads: Lead[] = [
@@ -23,17 +25,52 @@ const sampleLeads: Lead[] = [
     website: 'www.dundermifflin.com',
     status: 'new',
   },
-  // ... rest of your sample data
 ]
 
 export default function LeadsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedLead, setSelectedLead] = useState<Lead | undefined>(undefined)
+  const [uploadedLeads, setUploadedLeads] = useState<any[]>([])
+  const [isSending, setIsSending] = useState(false)
 
   const filteredLeads = sampleLeads.filter(lead => 
     lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     lead.company.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const handleUploadComplete = (data: any[]) => {
+    setUploadedLeads(data)
+    toast.success(`Successfully uploaded ${data.length} leads`)
+  }
+
+  const handleSendLeadRequests = async () => {
+    if (!uploadedLeads.length) {
+      toast.error('No leads to send requests to')
+      return
+    }
+
+    setIsSending(true)
+    try {
+      // Replace this with your actual API endpoint
+      const response = await fetch('/api/leads/bulk-send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ leads: uploadedLeads }),
+      })
+
+      if (!response.ok) throw new Error('Failed to send lead requests')
+
+      toast.success('Successfully sent lead requests')
+      setUploadedLeads([])
+    } catch (error) {
+      toast.error('Failed to send lead requests')
+      console.error(error)
+    } finally {
+      setIsSending(false)
+    }
+  }
 
   return (
     <>
@@ -41,10 +78,21 @@ export default function LeadsPage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-gray-900">Leads</h1>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
-            <Plus size={20} />
-            New lead
-          </button>
+          <div className="flex gap-3">
+            {uploadedLeads.length > 0 && (
+              <button
+                onClick={handleSendLeadRequests}
+                disabled={isSending}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50"
+              >
+                {isSending ? 'Sending...' : `Send Requests (${uploadedLeads.length})`}
+              </button>
+            )}
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+              <Plus size={20} />
+              New lead
+            </button>
+          </div>
         </div>
 
         {/* Search */}
@@ -61,6 +109,14 @@ export default function LeadsPage() {
 
         {/* Filters */}
         <LeadFilters />
+
+        {/* CSV Upload Section */}
+        <div className="mb-6">
+          <CSVUpload
+            onUploadComplete={handleUploadComplete}
+            onError={(error) => toast.error(error)}
+          />
+        </div>
 
         {/* Table */}
         <LeadTable 

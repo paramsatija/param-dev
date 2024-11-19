@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/leads/page": "app/(auth)/leads/page.js",
+  "/(auth)/inbox/page": "app/(auth)/inbox/page.js",
+  "/(auth)/accounts/page": "app/(auth)/accounts/page.js",
+  "/(auth)/dashboard/page": "app/(auth)/dashboard/page.js",
+  "/(auth)/marketplace/page": "app/(auth)/marketplace/page.js",
+  "/(auth)/chat/page": "app/(auth)/chat/page.js",
+  "/(auth)/calendar/page": "app/(auth)/calendar/page.js"
+}
