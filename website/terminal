@@ -1,0 +1,16 @@
+npx create-next-app@latest cognifuse-website --typescript --tailwind --app --src-dir
+cd cognifuse-website
+npm install @aws-amplify/cli @aws-sdk/client-ses @react-three/drei @react-three/fiber \
+@vercel/analytics aws-amplify framer-motion react-hook-form three \
+@testing-library/jest-dom @testing-library/react @types/jest @types/three \
+jest jest-environment-jsdom --save
+amplify configure
+amplify init
+amplify push
+touch .env.local
+npm run dev
+npm run build
+npm run start
+npm test
+npm run type-check
+npm run lint
