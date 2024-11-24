@@ -8,6 +8,7 @@ import ZoeModel from '@/components/3d/ZoeModel'
 import { BenefitCard } from '@/components/cards/BenefitCard'
 import { DemoSection } from '@/components/sections/DemoSection'
 import InteractiveDemo from '@/components/sections/InteractiveDemo'
+import { useRouter } from 'next/navigation'
 
 interface Benefit {
   title: string
@@ -47,6 +48,13 @@ const benefits: Benefit[] = [
 ]
 
 export default function HomePage() {
+  const router = useRouter()
+
+  const handleGetStarted = () => {
+    const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3001'
+    window.location.href = frontendUrl
+  }
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -70,6 +78,7 @@ export default function HomePage() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => window.location.href = 'http://localhost:3001/login'}
                     className="px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full font-grotesk text-lg text-white"
                   >
                     Try Zoe Free
@@ -84,7 +93,7 @@ export default function HomePage() {
                 </div>
               </motion.div>
               <div className="hidden lg:block h-[600px]">
-                <ZoeModel />
+                {/* <ZoeModel /> */}
               </div>
             </div>
           </div>

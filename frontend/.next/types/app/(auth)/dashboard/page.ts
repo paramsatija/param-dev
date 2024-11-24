@@ -1,4 +1,4 @@
-// File: /Users/param/Desktop/sales-agent-param-dev  /frontend/src/app/(auth)/dashboard/page.tsx
+// File: /Users/param/Desktop/sales-agent-param-dev  /sales-agent/frontend/src/app/(auth)/dashboard/page.tsx
 import * as entry from '../../../../../src/app/(auth)/dashboard/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

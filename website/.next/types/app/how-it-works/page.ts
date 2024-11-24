@@ -1,4 +1,4 @@
-// File: /Users/param/Desktop/website/src/app/how-it-works/page.tsx
+// File: /Users/param/Desktop/sales-agent-param-dev  /sales-agent/website/src/app/how-it-works/page.tsx
 import * as entry from '../../../../src/app/how-it-works/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

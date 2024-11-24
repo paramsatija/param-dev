@@ -1,5 +1,9 @@
-venv/
+
+node_modules/
+.next/
 .env
-__pycache__/
-*.pyc
-node_modules
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_Store
